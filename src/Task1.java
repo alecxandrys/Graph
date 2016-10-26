@@ -5,23 +5,23 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Main implements Runnable {
+public class Task1 implements Runnable {
 
     private int del;
     private int G1[][];
 
     public static void main(String args[]) {
-        SwingUtilities.invokeLater(new Main());
+        SwingUtilities.invokeLater(new Task1());
     }
 
     @Override
     public void run() {
 
-        JFrame jf = new JFrame("Graph1");
-        jf.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JFrame jf1 = new JFrame("Graph1");
+        jf1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jf.setVisible(true);
-        jf.setResizable(true);
+        jf1.setVisible(true);
+        jf1.setResizable(true);
 
         int n = (int) (Math.random() * 5 + 6);
 
@@ -30,11 +30,10 @@ public class Main implements Runnable {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 G1[i][j] = (int) (Math.random() * 2);
-                //G1[i][j]=10*i+j;
             }
         }
 
-        JTable table = new JTable(new myTableModel());
+        JTable table = new JTable(new Task1TableModel());
 
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -62,7 +61,7 @@ public class Main implements Runnable {
                 }
             }
             G1 = G2;
-            table.setModel(new myTableModel());
+            table.setModel(new Task1TableModel());
 
             int max=0;
             int index=0;
@@ -83,18 +82,30 @@ public class Main implements Runnable {
         spinner.addChangeListener(e -> del = (int) spinner.getValue());
 
         JPanel panel = new JPanel();
+
+
+        JButton changeButton=new JButton("На задание 2");
+
+        changeButton.addActionListener(e -> {
+            jf1.setVisible(false);
+            new Task2();
+        });
+
+        panel.add(changeButton);
         panel.add(button);
         panel.add(spinner);
         panel.add(label);
 
-        jf.setLayout(new BorderLayout());
-        jf.add(panel, BorderLayout.SOUTH);
-        jf.add(scrollPane, BorderLayout.NORTH);
-        jf.pack();
+
+        jf1.setLayout(new BorderLayout());
+        jf1.add(panel, BorderLayout.CENTER);
+        jf1.add(scrollPane, BorderLayout.NORTH);
+        jf1.pack();
+
 
     }
 
-    private class myTableModel implements TableModel {
+    private class Task1TableModel implements TableModel {
             private Set<TableModelListener> listeners = new HashSet<>();
 
             @Override
