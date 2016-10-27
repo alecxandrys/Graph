@@ -24,7 +24,7 @@ class Task2 {
         jf2.setVisible(true);
         jf2.setResizable(true);
 
-        int n = (int) (Math.random() * 4 + 4);
+        int n = (int) (Math.random() * 5 + 4);
 
         G1 = new int[n][n];
 
@@ -86,8 +86,15 @@ class Task2 {
             label.setText("Степень полуисхода для x"+calc+"="+curr);
         });
 
+        JButton changeButton=new JButton("На задание 3");
+
+        changeButton.addActionListener(e -> {
+            jf2.setVisible(false);
+            new Task3();
+        });
 
         JPanel panel=new JPanel();
+        panel.add(changeButton);
         panel.add(button);
         panel.add(spinner);
         panel.add(label);

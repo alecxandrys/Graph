@@ -23,7 +23,7 @@ public class Task1 implements Runnable {
         jf1.setVisible(true);
         jf1.setResizable(true);
 
-        int n = (int) (Math.random() * 5 + 6);
+        int n = (int) (Math.random() * 6 + 5);
 
         G1 = new int[n][n];
 
