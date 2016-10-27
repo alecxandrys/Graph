@@ -5,17 +5,17 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-class Task3 {
+class Task4 {
 
     private int G1[][];
 
-    Task3()
+    Task4()
     {
-        JFrame jf3 = new JFrame("Graph3");
+        JFrame jf4 = new JFrame("Graph3");
 
-        jf3.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        jf3.setVisible(true);
-        jf3.setResizable(true);
+        jf4.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jf4.setVisible(true);
+        jf4.setResizable(true);
 
         int n = (int) (Math.random() * 6 + 5);
 
@@ -27,44 +27,15 @@ class Task3 {
             }
         }
 
-        boolean symmetry = true;
-        for (int i = 0; i<n; i++)
-        {
-            for (int j=i;j<n;j++)
-            {
-                if(G1[i][j]!=G1[j][i])
-                {
-                    symmetry =false;break;
-                }
-            }
-        }
-
-        JTable table = new JTable(new Task3TableModel());
+        JTable table = new JTable(new Task4TableModel());
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        JLabel label=new JLabel();
 
-        if (symmetry) label.setText("Граф симметричен");
-        else label.setText("Граф не симметричен");
-
-        JButton changeButton=new JButton("На задание 3");
-
-        changeButton.addActionListener(e -> {
-            jf3.setVisible(false);
-            new Task4();
-        });
-
-        JPanel panel=new JPanel();
-
-        panel.add(label);
-        panel.add(changeButton);
-
-        jf3.add(scrollPane, BorderLayout.NORTH);
-        jf3.add(panel,BorderLayout.CENTER);
-        jf3.pack();
+        jf4.add(scrollPane, BorderLayout.NORTH);
+        jf4.pack();
     }
-    private class Task3TableModel implements TableModel {
+    private class Task4TableModel implements TableModel {
         private Set<TableModelListener> listeners = new HashSet<>();
 
         @Override
@@ -114,4 +85,3 @@ class Task3 {
         }
     }
 }
-
