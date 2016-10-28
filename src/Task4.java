@@ -7,11 +7,12 @@ import java.util.Set;
 
 class Task4 {
 
-    private int G1[][];
+    //не связанный и оба замыкания для х4
+    static int G1[][];
 
     Task4()
     {
-        JFrame jf4 = new JFrame("Graph3");
+        JFrame jf4 = new JFrame("Graph4");
 
         jf4.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf4.setVisible(true);
@@ -34,7 +35,10 @@ class Task4 {
 
         jf4.add(scrollPane, BorderLayout.NORTH);
         jf4.pack();
+
+
     }
+
     private class Task4TableModel implements TableModel {
         private Set<TableModelListener> listeners = new HashSet<>();
 

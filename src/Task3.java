@@ -48,7 +48,7 @@ class Task3 {
         if (symmetry) label.setText("Граф симметричен");
         else label.setText("Граф не симметричен");
 
-        JButton changeButton=new JButton("На задание 3");
+        JButton changeButton=new JButton("На задание 4");
 
         changeButton.addActionListener(e -> {
             jf3.setVisible(false);
