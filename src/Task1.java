@@ -17,7 +17,7 @@ public class Task1 implements Runnable {
     @Override
     public void run() {
 
-        JFrame jf1 = new JFrame("Graph1");
+        JFrame jf1 = new JFrame("Максимальная степень полуисхода. Чудинов Александр Алексеевич");
         jf1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jf1.setVisible(true);

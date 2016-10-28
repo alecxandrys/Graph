@@ -11,7 +11,7 @@ class Task3 {
 
     Task3()
     {
-        JFrame jf3 = new JFrame("Graph3");
+        JFrame jf3 = new JFrame("Симметрия графа. Чудинов Александр Алексеевич");
 
         jf3.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf3.setVisible(true);

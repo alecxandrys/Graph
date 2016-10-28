@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +11,11 @@ class Task4 {
     //не связанный и оба замыкания для х4
     static int G1[][];
 
+    static JFrame jf4;
+
     Task4()
     {
-        JFrame jf4 = new JFrame("Graph4");
+        jf4 = new JFrame("Не связанность и замыкания. Чудинов Александр Алексеевич");
 
         jf4.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf4.setVisible(true);
@@ -28,19 +31,49 @@ class Task4 {
             }
         }
 
-        JTable table = new JTable(new Task4TableModel());
+        JTable table = new JTable(new Task4_1TableModel());
 
         JScrollPane scrollPane = new JScrollPane(table);
 
 
         jf4.add(scrollPane, BorderLayout.NORTH);
-        jf4.pack();
 
         Thread cameTo=new PathChecker(4,true);
         cameTo.start();
+        Thread cameFrom=new PathChecker(4,false);
+        cameFrom.start();
     }
 
-    private class Task4TableModel implements TableModel {
+    static void SetTableModel(ArrayList<Integer> circuitIn,ArrayList<Integer> circuitOut, Boolean divided)
+    {
+
+        JLabel circuitInList=new JLabel("Элементы прямого замыкания: ");
+
+        for (Integer element:circuitIn)
+        {
+            circuitInList.setText(circuitInList.getText()+" "+element);
+        }
+
+        JLabel circuitOutList=new JLabel("Элементы обратного замыкания: ");
+
+        for (Integer element:circuitOut)
+        {
+            circuitOutList.setText(circuitOutList.getText()+" "+element);
+        }
+
+        JLabel divideMess=new JLabel("Не связанность-"+divided);
+
+        JPanel answer=new JPanel();
+
+        answer.add(circuitInList);
+        answer.add(circuitOutList);
+        answer.add(divideMess);
+
+        jf4.add(answer,BorderLayout.CENTER);
+        jf4.pack();
+    }
+
+    private class Task4_1TableModel implements TableModel {
         private Set<TableModelListener> listeners = new HashSet<>();
 
         @Override

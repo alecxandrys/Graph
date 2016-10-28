@@ -7,6 +7,12 @@ class PathChecker extends Thread{
 
     private boolean cameTo;
 
+    private static ArrayList<Integer> answerListOut=new ArrayList<>();
+    private static ArrayList<Integer> answerListIn=new ArrayList<>();
+
+    private static ArrayList<Integer> notOutCircuit;
+    private static ArrayList<Integer> notInCircuit;
+
     PathChecker(int target,boolean cameTo)
     {
         this.target=target;
@@ -46,7 +52,44 @@ class PathChecker extends Thread{
             }
         }
 
-        ArrayList<Integer> cameTo=new ArrayList<>();
+        if (cameTo) {
+            notOutCircuit=new ArrayList<>();
+            for (int i = 0; i < Task4.G1.length; i++) {
+                if (came_from.containsKey(i)) {
+                    answerListOut.add(i);
+                } else {
+                    notOutCircuit.add(i);
+                }
+            }
+        }
+        else
+        {
+            notInCircuit=new ArrayList<>();
+            for (int i = 0; i < Task4.G1.length; i++) {
+                if (came_from.containsKey(i)) {
+                    answerListIn.add(i);
+                } else {
+                    notInCircuit.add(i);
+                }
+            }
+        }
+
+        CallMain();
+    }
+
+    private void CallMain()
+    {
+        if (notOutCircuit!=null && notInCircuit!=null)
+        {
+            boolean divided=false;
+            for (Integer aNotOutCircuit : notOutCircuit) {
+                if (!notInCircuit.contains(aNotOutCircuit)) {
+                    divided = true;
+                    break;
+                }
+            }
+            Task4.SetTableModel(answerListIn,answerListOut,divided);
+        }
 
     }
 

@@ -18,7 +18,7 @@ class Task2 {
     private int calc;
 
     Task2() {
-        JFrame jf2 = new JFrame("Graph2");
+        JFrame jf2 = new JFrame("Степень полуисхода указанной вершины.Чудинов Александр Чудинов Александр");
 
         jf2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf2.setVisible(true);
