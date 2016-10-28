@@ -36,7 +36,8 @@ class Task4 {
         jf4.add(scrollPane, BorderLayout.NORTH);
         jf4.pack();
 
-
+        Thread cameTo=new PathChecker(4,true);
+        cameTo.start();
     }
 
     private class Task4TableModel implements TableModel {
