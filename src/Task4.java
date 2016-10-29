@@ -31,10 +31,11 @@ class Task4 {
             }
         }
 
-        JTable table = new JTable(new Task4_1TableModel());
+        JTable table = new JTable(new ConjunctionTableModel(G1));
 
         JScrollPane scrollPane = new JScrollPane(table);
 
+        scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
 
         jf4.add(scrollPane, BorderLayout.NORTH);
 

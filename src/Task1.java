@@ -34,6 +34,8 @@ public class Task1 implements Runnable {
 
         JScrollPane scrollPane = new JScrollPane(table);
 
+        scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
+
         JButton button = new JButton("Accept deletion");
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 1, n , 1));
         JLabel label=new JLabel("Рассчет для указанной вершины не производился");
@@ -98,7 +100,6 @@ public class Task1 implements Runnable {
         panel.add(button);
         panel.add(spinner);
         panel.add(label);
-        scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
 
         jf1.setLayout(new BoxLayout(jf1.getContentPane(),BoxLayout.PAGE_AXIS));
         jf1.add(scrollPane);

@@ -39,14 +39,16 @@ class Task3 {
             }
         }
 
-        JTable table = new JTable(new Task3TableModel());
+        JTable table = new JTable(new ConjunctionTableModel(G1));
 
         JScrollPane scrollPane = new JScrollPane(table);
 
+        scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
+
         JLabel label=new JLabel();
 
-        if (symmetry) label.setText("Граф симметричен");
-        else label.setText("Граф не симметричен");
+        if (symmetry) label.setText("Проверка произведена: Граф симметричен");
+        else label.setText("Проверка произведена: Граф не симметричен");
 
         JButton changeButton=new JButton("На задание 4");
 
@@ -57,61 +59,13 @@ class Task3 {
 
         JPanel panel=new JPanel();
 
-        panel.add(label);
         panel.add(changeButton);
+        panel.add(label);
 
         jf3.add(scrollPane, BorderLayout.NORTH);
         jf3.add(panel,BorderLayout.CENTER);
         jf3.pack();
     }
-    private class Task3TableModel implements TableModel {
-        private Set<TableModelListener> listeners = new HashSet<>();
 
-        @Override
-        public int getRowCount() {
-            return G1.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return G1.length;
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return "x" + columnIndex;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return int.class;
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-
-            return G1[rowIndex][columnIndex];
-        }
-
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-        }
-
-        @Override
-        public void addTableModelListener(TableModelListener l) {
-            listeners.add(l);
-        }
-
-        @Override
-        public void removeTableModelListener(TableModelListener l) {
-            listeners.remove(l);
-        }
-    }
 }
 
