@@ -1,21 +1,17 @@
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 class Task4 {
 
     //не связанный и оба замыкания для х4
     static int G1[][];
 
-    static JFrame jf4;
+    private static JFrame jf4;
 
     Task4()
     {
-        jf4 = new JFrame("Не связанность и замыкания. Чудинов Александр Алексеевич");
+        jf4 = new JFrame("Связанность и замыкания. Чудинов Александр Алексеевич");
 
         jf4.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf4.setVisible(true);
@@ -62,7 +58,7 @@ class Task4 {
             circuitOutList.setText(circuitOutList.getText()+" "+element);
         }
 
-        JLabel divideMess=new JLabel("Не связанность-"+divided);
+        JLabel divideMess=new JLabel("Связанность-"+!divided);
 
         JPanel answer=new JPanel();
 
@@ -70,57 +66,14 @@ class Task4 {
         answer.add(circuitOutList);
         answer.add(divideMess);
 
+        JButton changeButton=new JButton("На задание 5");
+        changeButton.addActionListener(e -> {
+            jf4.setVisible(false);
+            new Task5();
+        });
+
         jf4.add(answer,BorderLayout.CENTER);
+        jf4.add(changeButton,BorderLayout.SOUTH);
         jf4.pack();
-    }
-
-    private class Task4_1TableModel implements TableModel {
-        private Set<TableModelListener> listeners = new HashSet<>();
-
-        @Override
-        public int getRowCount() {
-            return G1.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return G1.length;
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return "x" + columnIndex;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return int.class;
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-
-            return G1[rowIndex][columnIndex];
-        }
-
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-        }
-
-        @Override
-        public void addTableModelListener(TableModelListener l) {
-            listeners.add(l);
-        }
-
-        @Override
-        public void removeTableModelListener(TableModelListener l) {
-            listeners.remove(l);
-        }
     }
 }

@@ -1,9 +1,5 @@
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
 
 class Task3 {
 
