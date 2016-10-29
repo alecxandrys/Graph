@@ -1,14 +1,11 @@
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Task1 implements Runnable {
 
     private int del;
     private int G1[][];
+    private int n;
 
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Task1());
@@ -17,13 +14,13 @@ public class Task1 implements Runnable {
     @Override
     public void run() {
 
-        JFrame jf1 = new JFrame("Максимальная степень полуисхода. Чудинов Александр Алексеевич");
+        JFrame jf1 = new JFrame("Максимальная степень полуисхода.Чудинов Александр Алексеевич");
         jf1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         jf1.setVisible(true);
         jf1.setResizable(true);
 
-        int n = (int) (Math.random() * 6 + 5);
+        n = (int) (Math.random() * 6 + 5);
 
         G1 = new int[n][n];
 
@@ -33,50 +30,56 @@ public class Task1 implements Runnable {
             }
         }
 
-        JTable table = new JTable(new Task1TableModel());
+        JTable table = new JTable(new ConjunctionTableModel(G1));
 
         JScrollPane scrollPane = new JScrollPane(table);
 
         JButton button = new JButton("Accept deletion");
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, n - 1, 1));
-        JLabel label=new JLabel();
+        JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 1, n , 1));
+        JLabel label=new JLabel("Рассчет для указанной вершины не производился");
 
         button.addActionListener(e -> {
-            button.setVisible(false);
-            int G2[][] = new int[n - 1][n - 1];
-
-            for (int i = 0; i < n; i++) {
-                if (i == del) continue;
-                for (int j = 0; j < n; j++) {
-                    if (j == del) continue;
-                    if (i < del && j < del) {
-                        G2[i][j] = G1[i][j];
-                    } else if (i < del && j > del) {
-                        G2[i][j-1] = G1[i][j];
-                    } else if (i > del && j < del) {
-                        G2[i-1][j] = G1[i][j];
-                    } else if (i > del && j > del){
-                        G2[i-1][j-1] = G1[i][j];
+            if (n!=1) {
+                int G2[][] = new int[n - 1][n - 1];
+                for (int i = 0; i < n; i++) {
+                    if (i == del) continue;
+                    for (int j = 0; j < n; j++) {
+                        if (j == del) continue;
+                        if (i < del && j < del) {
+                            G2[i][j] = G1[i][j];
+                        } else if (i < del && j > del) {
+                            G2[i][j - 1] = G1[i][j];
+                        } else if (i > del && j < del) {
+                            G2[i - 1][j] = G1[i][j];
+                        } else if (i > del && j > del) {
+                            G2[i - 1][j - 1] = G1[i][j];
+                        }
                     }
                 }
-            }
-            G1 = G2;
-            table.setModel(new Task1TableModel());
+                G1 = G2;
+                table.setModel(new ConjunctionTableModel(G1));
 
-            int max=0;
-            int index=0;
+                int max = 0;
+                int index = 0;
 
-            for (int i=0;i<n-1;i++)
-            {
-                int curr=0;
-                for (int j=0;j<n-1;j++)
-                {
-                    curr=curr+G1[i][j];
+                for (int i = 0; i < n - 1; i++) {
+                    int curr = 0;
+                    for (int j = 0; j < n - 1; j++) {
+                        curr = curr + G1[i][j];
+                    }
+                    if (curr > max) {
+                        max = curr;
+                        index = i;
+                    }
                 }
-                if (curr>max) {max=curr;index=i;}
-            }
 
-            label.setText("Максимальная полустепень исхода при x"+index+'='+max);
+                label.setText("Максимальная полустепень исхода при x" + index + '=' + max);
+                n--;
+            }
+            else
+            {
+                label.setText("Данная операция невозможна");
+            }
         });
 
         spinner.addChangeListener(e -> del = (int) spinner.getValue());
@@ -95,63 +98,12 @@ public class Task1 implements Runnable {
         panel.add(button);
         panel.add(spinner);
         panel.add(label);
+        scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
 
-
-        jf1.setLayout(new BorderLayout());
-        jf1.add(panel, BorderLayout.CENTER);
-        jf1.add(scrollPane, BorderLayout.NORTH);
+        jf1.setLayout(new BoxLayout(jf1.getContentPane(),BoxLayout.PAGE_AXIS));
+        jf1.add(scrollPane);
+        jf1.add(panel);
         jf1.pack();
 
-
     }
-
-    private class Task1TableModel implements TableModel {
-            private Set<TableModelListener> listeners = new HashSet<>();
-
-            @Override
-            public int getRowCount() {
-            return G1.length;
-        }
-
-            @Override
-            public int getColumnCount() {
-            return G1.length;
-        }
-
-            @Override
-            public String getColumnName(int columnIndex) {
-            return "x" + columnIndex;
-        }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-            return int.class;
-        }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-
-            return G1[rowIndex][columnIndex];
-        }
-
-            @Override
-            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-        }
-
-            @Override
-            public void addTableModelListener(TableModelListener l) {
-            listeners.add(l);
-        }
-
-            @Override
-            public void removeTableModelListener(TableModelListener l) {
-            listeners.remove(l);
-        }
-        }
-    }
+}

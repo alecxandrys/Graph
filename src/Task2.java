@@ -37,7 +37,7 @@ class Task2 {
             }
         }
 
-        JTable tableG1 = new JTable(new Task2_1TableModel());
+        JTable tableG1 = new JTable(new ConjunctionTableModel(G1));
 
         G2 = new int[n][count];
 
@@ -65,8 +65,10 @@ class Task2 {
         JTable tableG2 = new JTable(new Task2_2TableModel());
 
         JScrollPane scrollPaneG1 = new JScrollPane(tableG1);
+        scrollPaneG1.setPreferredSize(new Dimension(tableG1.getWidth(),tableG1.getRowHeight()*tableG1.getRowCount()+25));
 
         JScrollPane scrollPaneG2 = new JScrollPane(tableG2);
+        scrollPaneG2.setPreferredSize(new Dimension(tableG2.getWidth(),tableG2.getRowHeight()*tableG2.getRowCount()+25));
 
 
         JButton button = new JButton("Accept calculation");
@@ -74,7 +76,7 @@ class Task2 {
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, n - 1, 1));
         spinner.addChangeListener(e -> calc = (int) spinner.getValue());
 
-        JLabel label=new JLabel();
+        JLabel label=new JLabel("Рассчёты для указанной вершины не производились");
 
         button.addActionListener(e -> {
             button.setVisible(false);
@@ -107,55 +109,6 @@ class Task2 {
 
     }
 
-    private class Task2_1TableModel implements TableModel {
-        private Set<TableModelListener> listeners = new HashSet<>();
-
-        @Override
-        public int getRowCount() {
-            return G1.length;
-        }
-
-        @Override
-        public int getColumnCount() {
-            return G1.length;
-        }
-
-        @Override
-        public String getColumnName(int columnIndex) {
-            return "x" + columnIndex;
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return int.class;
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            return G1[rowIndex][columnIndex];
-        }
-
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-
-        }
-
-        @Override
-        public void addTableModelListener(TableModelListener l) {
-            listeners.add(l);
-        }
-
-        @Override
-        public void removeTableModelListener(TableModelListener l) {
-            listeners.remove(l);
-        }
-    }
-
     private class Task2_2TableModel implements TableModel {
         private Set<TableModelListener> listeners = new HashSet<>();
 
@@ -166,16 +119,18 @@ class Task2 {
 
         @Override
         public int getColumnCount() {
-            return G2[0].length;
+            return G2[0].length+1;
         }
 
         @Override
         public String getColumnName(int columnIndex) {
+            if (columnIndex == 0) return "";
             return "a" + columnIndex;
         }
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
+            if (columnIndex == 0) return String.class;
             return int.class;
         }
 
@@ -186,7 +141,10 @@ class Task2 {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return G2[rowIndex][columnIndex];
+            if (columnIndex == 0) {
+                return "x" + (rowIndex + 1);
+            }
+            return G2[rowIndex][columnIndex-1];
         }
 
         @Override
