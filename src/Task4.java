@@ -54,8 +54,8 @@ class Task4 {
 
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(4, true,1));
-        FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(4, false,1));
+        FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(4, true,false));
+        FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(4, false,false));
 
         long start = System.currentTimeMillis();
 
@@ -136,8 +136,8 @@ class Task4 {
 
             ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-            FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(4, true,1));
-            FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(4, false,1));
+            FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(4, true,false));
+            FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(4, false,false));
 
             long start = System.currentTimeMillis();
 
@@ -149,7 +149,24 @@ class Task4 {
             }
 
             long finish = System.currentTimeMillis();
+
             log.append("\nВремя последовательного исполнения для n="+n+" вершин равно "+(finish-start)+"мс");
+            executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+            circuitIn = new FutureTask<>(new PathChecker(4, true,true));
+            circuitOut = new FutureTask<>(new PathChecker(4, false,true));
+
+            start = System.currentTimeMillis();
+
+            executor.submit(circuitIn);
+            executor.submit(circuitOut);
+
+            while (!circuitIn.isDone() && !circuitOut.isDone()) {
+
+            }
+
+            finish = System.currentTimeMillis();
+            log.append("\nВремя параллельного исполнения для n="+n+" вершин равно "+(finish-start)+"мс");
         }
     }
 }

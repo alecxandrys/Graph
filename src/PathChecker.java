@@ -8,14 +8,16 @@ class PathChecker implements Callable<ArrayList> {
 
     private boolean cameTo;
 
-    private int maxThread;
+    private boolean multiThread;
+
+    private int current;
 
     private ArrayList<Integer> circuit = new ArrayList<>();
 
-    PathChecker(int target, boolean cameTo, int maxThread) {
+    PathChecker(int target, boolean cameTo, boolean multiThread) {
         this.target = target;
         this.cameTo = cameTo;
-        this.maxThread = maxThread;
+        this.multiThread = multiThread;
     }
 
     private int Cost() {
@@ -55,20 +57,31 @@ class PathChecker implements Callable<ArrayList> {
 
         came_from.put(target, -1);
 
-        int current;
-
         while (!frontline.isEmpty()) {
             current = frontline.get(0);
             frontline.remove(0);
             ArrayList<Integer> neighbor = neighbor(current);
-            for (Integer next : neighbor) {
-                int newCost = cost_so_far.get(current) + Cost();
-                if (!cost_so_far.containsKey(next) || newCost < cost_so_far.get(next)) {
-                    cost_so_far.put(next, newCost);
-                    frontline.add(next);
-                    came_from.put(next, current);
-                }
+            if (multiThread) {
+                neighbor.parallelStream()
+                        .forEach(next -> {
+                            int newCost = cost_so_far.get(current) + Cost();
+                            if (!cost_so_far.containsKey(next) || newCost < cost_so_far.get(next)) {
+                                cost_so_far.put(next, newCost);
+                                frontline.add(next);
+                                came_from.put(next, current);
+                            }
+                        });
+            }
+            else {
+                for (Integer next : neighbor) {
+                    int newCost = cost_so_far.get(current) + Cost();
+                    if (!cost_so_far.containsKey(next) || newCost < cost_so_far.get(next)) {
+                        cost_so_far.put(next, newCost);
+                        frontline.add(next);
+                        came_from.put(next, current);
+                    }
 
+                }
             }
         }
 
