@@ -8,11 +8,14 @@ class PathChecker implements Callable<ArrayList> {
 
     private boolean cameTo;
 
+    private int maxThread;
+
     private ArrayList<Integer> circuit = new ArrayList<>();
 
-    PathChecker(int target, boolean cameTo) {
+    PathChecker(int target, boolean cameTo, int maxThread) {
         this.target = target;
         this.cameTo = cameTo;
+        this.maxThread = maxThread;
     }
 
     private int Cost() {
@@ -35,7 +38,6 @@ class PathChecker implements Callable<ArrayList> {
                 }
             }
         }
-
         neighbor.trimToSize();
         return neighbor;
     }
