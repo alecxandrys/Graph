@@ -75,7 +75,7 @@ public class Task1 implements Runnable {
                     }
                 }
 
-                label.setText("Максимальная полустепень исхода при x" + index + '=' + max);
+                label.setText("Максимальная полустепень исхода при x" + (index+1) + '=' + max);
                 n--;
             }
             else

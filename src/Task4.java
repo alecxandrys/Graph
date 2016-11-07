@@ -112,17 +112,19 @@ class Task4 {
 
     private class Multi_StreamBurn implements ActionListener
     {
+        JTextArea log=new JTextArea("Вывод лога вычислении при большом количестве вершин");
+        JScrollPane logPane=new JScrollPane(log);
         @Override
         public void actionPerformed(ActionEvent e) {
 
             JButton butt=(JButton)e.getSource();
             butt.setVisible(false);
-            JTextArea log=new JTextArea("Вывод лога вычислении при большом количестве вершин");
-            JScrollPane logPane=new JScrollPane(log);
 
             jf4.remove(answer);
-            jf4.add(logPane,BorderLayout.CENTER);
-            jf4.pack();
+            answer=new JPanel();
+            answer.add(logPane);
+            jf4.add(answer,BorderLayout.CENTER);
+
 
             int n = (int) (Math.random() * 1025 + 1024);
 
@@ -167,6 +169,8 @@ class Task4 {
 
             finish = System.currentTimeMillis();
             log.append("\nВремя параллельного исполнения для n="+n+" вершин равно "+(finish-start)+"мс");
+            butt.setVisible(true);
+            jf4.pack();
         }
     }
 }

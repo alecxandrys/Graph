@@ -11,9 +11,9 @@ class Task2 {
 
     private int curr;
 
-    private int count;
+    private int count=0;
 
-    private int calc;
+    private int calc=0;
 
     Task2() {
         JFrame jf2 = new JFrame("Степень полуисхода указанной вершины.Чудинов Александр Чудинов Александр");
@@ -24,18 +24,16 @@ class Task2 {
 
         int n = (int) (Math.random() * 5 + 4);
 
-        int[][] g1 = new int[n][n];
-
-        count = 0;
+        int[][] G1 = new int[n][n];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                g1[i][j] = (int) (Math.random() * 2);
-                if (g1[i][j] == 1) count++;
+                G1[i][j] = (int) (Math.random() * 2);
+                if (G1[i][j] == 1) count++;
             }
         }
 
-        JTable tableG1 = new JTable(new ConjunctionTableModel(g1));
+        JTable tableG1 = new JTable(new ConjunctionTableModel(G1));
 
         G2 = new int[n][count];
 
@@ -44,7 +42,7 @@ class Task2 {
         for (int i = 0; i < n; i++) {
             G2[i][curr] = 0;
             for (int j = 0; j < n; j++) {
-                if (g1[i][j] == 1) {
+                if (G1[i][j] == 1) {
                     if (i == j) G2[i][curr] = 2;
                     else {
                         G2[i][curr] = 1;
@@ -81,9 +79,9 @@ class Task2 {
             curr=0;
             for(int i=0;i<count;i++)
             {
-                if (G2[calc][i]==-1) curr++;
+                if (G2[calc][i]==1) curr++;
             }
-            label.setText("Степень полуисхода для x"+calc+"="+curr);
+            label.setText("Степень полуисхода для x"+(calc+1)+"="+curr);
         });
 
         JButton changeButton=new JButton("На задание 3");
