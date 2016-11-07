@@ -8,6 +8,7 @@ class Task4 {
     static int G1[][];
 
     private static JFrame jf4;
+    private static long start;
 
     Task4()
     {
@@ -35,14 +36,17 @@ class Task4 {
 
         jf4.add(scrollPane, BorderLayout.NORTH);
 
+        start = System.currentTimeMillis();
         Thread cameTo=new PathChecker(4,true);
         cameTo.start();
         Thread cameFrom=new PathChecker(4,false);
         cameFrom.start();
+
     }
 
     static void SetTableModel(ArrayList<Integer> circuitIn,ArrayList<Integer> circuitOut, Boolean divided)
     {
+        long finish = System.currentTimeMillis();
 
         JLabel circuitInList=new JLabel("Элементы прямого замыкания: ");
 
@@ -66,14 +70,21 @@ class Task4 {
         answer.add(circuitOutList);
         answer.add(divideMess);
 
-        JButton changeButton=new JButton("На задание 5");
+        JButton changeButton=new JButton("Исполнить многопоточное сравнение");
         changeButton.addActionListener(e -> {
             jf4.setVisible(false);
             new Task5();
         });
 
+        JLabel timeMess=new JLabel("Время выполнения штатного задания (2 потока)="+(finish - start)+"мс");
+
+        JPanel charge=new JPanel();
+
+        charge.add(changeButton);
+        charge.add(timeMess);
+
         jf4.add(answer,BorderLayout.CENTER);
-        jf4.add(changeButton,BorderLayout.SOUTH);
+        jf4.add(charge,BorderLayout.SOUTH);
         jf4.pack();
     }
 }
