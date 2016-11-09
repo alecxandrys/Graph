@@ -1,3 +1,4 @@
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.util.HashSet;
@@ -50,12 +51,10 @@ class ConjunctionTableModel implements TableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        if (!(aValue instanceof String)) {
             if ((int) aValue == 0 || (int) aValue == 1) {
                 G1[rowIndex][columnIndex - 1] = (int) aValue;
             }
-        }
-
+            listeners.forEach(e->{e.tableChanged(new TableModelEvent(this));});
     }
 
     @Override
@@ -67,4 +66,5 @@ class ConjunctionTableModel implements TableModel {
     public void removeTableModelListener(TableModelListener l) {
         listeners.remove(l);
     }
+
 }

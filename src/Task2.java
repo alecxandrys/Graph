@@ -33,9 +33,9 @@ class Task2 {
             }
         }
 
-        JTable tableG1 = new JTable(new ConjunctionTableModel(G1));
-
         G2 = new int[n][count];
+
+        JTable tableG1 = new JTable(new ConjunctionTableModel(G1));
 
         curr = 0;
 
@@ -81,7 +81,7 @@ class Task2 {
             {
                 if (G2[calc][i]==1) curr++;
             }
-            label.setText("Степень полуисхода для x"+(calc+1)+"="+curr);
+            label.setText("Степень полуисхода для x"+(calc)+"="+curr);
         });
 
         JButton changeButton=new JButton("На задание 3");
