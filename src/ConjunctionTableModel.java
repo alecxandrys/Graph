@@ -31,12 +31,12 @@ class ConjunctionTableModel implements TableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         if (columnIndex == 0) return String.class;
-        return int.class;
+        return Integer.class;
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex != 0;
+        return columnIndex!=0;
     }
 
     @Override
