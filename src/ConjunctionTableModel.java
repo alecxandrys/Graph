@@ -54,7 +54,7 @@ class ConjunctionTableModel implements TableModel {
             if ((int) aValue == 0 || (int) aValue == 1) {
                 G1[rowIndex][columnIndex - 1] = (int) aValue;
             }
-            listeners.forEach(e->{e.tableChanged(new TableModelEvent(this));});
+            listeners.forEach(e-> e.tableChanged(new TableModelEvent(this)));
     }
 
     @Override
