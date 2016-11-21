@@ -13,7 +13,7 @@ class Task2 {
 
     private int count=0;
 
-    private int calc=0;
+    private int calc=1;
 
     Task2() {
         JFrame jf2 = new JFrame("Степень полуисхода указанной вершины.Чудинов Александр Чудинов Александр");
@@ -79,7 +79,7 @@ class Task2 {
             curr=0;
             for(int i=0;i<count;i++)
             {
-                if (G2[calc][i]==1) curr++;
+                if (G2[calc-1][i]==1) curr++;
             }
             label.setText("Степень полуисхода для x"+(calc)+"="+curr);
         });
