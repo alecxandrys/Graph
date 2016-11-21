@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.*;
 
 class Task3 {
@@ -35,7 +37,11 @@ class Task3 {
             }
         }
 
-        JTable table = new JTable(new ConjunctionTableModel(G1));
+        ConjunctionTableModel tableModel=new ConjunctionTableModel(G1);
+
+
+
+        JTable table = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -61,6 +67,22 @@ class Task3 {
         jf3.add(scrollPane, BorderLayout.NORTH);
         jf3.add(panel,BorderLayout.CENTER);
         jf3.pack();
+
+        tableModel.addTableModelListener(e -> {
+            boolean symmetry1 = true;
+            for (int i = 0; i<n; i++)
+            {
+                for (int j=i;j<n;j++)
+                {
+                    if(G1[i][j]!=G1[j][i])
+                    {
+                        symmetry1 =false;break;
+                    }
+                }
+            }
+            if (symmetry1) label.setText("Проверка произведена: Граф симметричен");
+            else label.setText("Проверка произведена: Граф не симметричен");
+        });
     }
 
 }
