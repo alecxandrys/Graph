@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 class Task5 {
 
@@ -17,8 +22,7 @@ class Task5 {
 
     private int n;
 
-    Task5()
-    {
+    Task5() {
         jf5 = new JFrame("Чудинов Александр Алексеевич");
 
         jf5.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -46,7 +50,6 @@ class Task5 {
         }
 
 
-
         JTable tableG1 = new JTable(new ConjunctionTableModel(G1));
 
         JScrollPane scrollPaneG1 = new JScrollPane(tableG1);
@@ -59,10 +62,10 @@ class Task5 {
 
         scrollPaneG2.setPreferredSize(new Dimension(tableG2.getWidth() + 5, tableG2.getRowHeight() * tableG2.getRowCount() + 25));
 
-        JButton calcG3=new JButton("Рассчитать граф G3");
+        JButton calcG3 = new JButton("Рассчитать граф G3");
         calcG3.addActionListener(new calculateG3());
 
-        tables=new JPanel();
+        tables = new JPanel();
         tables.setLayout(new BoxLayout(tables, BoxLayout.PAGE_AXIS));
 
         tables.add(new Label("Граф G1"));
@@ -72,32 +75,28 @@ class Task5 {
         tables.add(calcG3);
 
 
-        jf5.add(tables,BorderLayout.NORTH);
+        jf5.add(tables, BorderLayout.NORTH);
         jf5.pack();
     }
 
-    private class calculateG3 implements ActionListener
-    {
+    private class calculateG3 implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            JButton source=(JButton)e.getSource();
+            JButton source = (JButton) e.getSource();
             source.setVisible(false);
-            if (G2.length<=G1.length) n=G2.length;
-            else n=G1.length;
+            if (G2.length <= G1.length) n = G2.length;
+            else n = G1.length;
 
-            G3=new int[n][n];
+            G3 = new int[n][n];
 
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (G1[i][j]==1 && G2[i][j]==1)
-                    {
-                        G3[i][j]=1;
-                    }
-                    else
-                    {
-                        G3[i][j]=0;
+                    if (G1[i][j] == 1 && G2[i][j] == 1) {
+                        G3[i][j] = 1;
+                    } else {
+                        G3[i][j] = 0;
                     }
                 }
             }
@@ -107,7 +106,7 @@ class Task5 {
 
             scrollPaneG3.setPreferredSize(new Dimension(tableG3.getWidth() + 5, tableG3.getRowHeight() * tableG3.getRowCount() + 25));
 
-            JButton calcSubGraph=new JButton("Рассчитать субграфы");
+            JButton calcSubGraph = new JButton("Рассчитать субграфы");
             calcSubGraph.addActionListener(new calculateSubGraph());
 
             tables.add(new Label("Граф G3"));
@@ -116,11 +115,96 @@ class Task5 {
             jf5.pack();
         }
     }
-    private class  calculateSubGraph implements ActionListener
-    {
+
+    private class calculateSubGraph implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            JTextArea log = new JTextArea("Вывод лога поиска сильно связанных подграфов по методу Мальгранжа");
+            JScrollPane logPane = new JScrollPane(log);
 
+            ArrayList<Integer> usedComp=new ArrayList<>();
+
+            int[][] temp = new int[n][n];
+
+            for (int i = 0; i < n; i++) {
+                System.arraycopy(G1[i], 0, temp[i], 0, n);
+            }
+
+            int currpoint = 0;
+
+            while (true) {
+
+                Task4.G1 = temp;
+                ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+                FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(0, true, false));
+                FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(0, false, false));
+
+                long start = System.currentTimeMillis();
+
+                executor.submit(circuitIn);
+                executor.submit(circuitOut);
+
+                while (!circuitIn.isDone() && !circuitOut.isDone()) {
+
+                }
+
+                long finish = System.currentTimeMillis();
+
+                ArrayList<Integer> circuitInArray = null;
+                ArrayList<Integer> circuitOutArray = null;
+                try {
+                    circuitInArray = circuitIn.get();
+                    circuitOutArray = circuitOut.get();
+                } catch (InterruptedException | ExecutionException e1) {
+                    e1.printStackTrace();
+                }
+
+
+                if (circuitInArray == null || circuitOutArray == null) {
+                    log.append("\nДля компоненты " + (currpoint + 1) + " подграфа не выявлено");
+                    break;
+                }
+
+                ArrayList<Integer> subGraph = new ArrayList<>();
+
+                for (Integer element : circuitInArray) {
+                    if (circuitOutArray.contains(element)) {
+                        subGraph.add(element);
+                    }
+                }
+
+                log.append("\nДля компоненты " + (currpoint + 1) + " выявлены следущие компоненты подграфа");
+                for (Integer element : subGraph) {
+                    log.append((String.valueOf(element)+1)+" ");
+                }
+
+                if ((subGraph.size() + 1) >= n) {
+                    temp = null;
+                    break;
+                } else {
+                    n = n - (subGraph.size() + 1);
+                    int[][] tempo = new int[n][n];
+                    int k = 0;
+                    int p = 0;
+                    for (int i = 0; i < temp.length; i++) {
+                        if (i == currpoint || subGraph.contains(i)) {
+                            continue;
+                        }
+                        for (int j = 0; j < temp[i].length; j++) {
+                            if (j == currpoint || subGraph.contains(j)) {
+                                continue;
+                            }
+                            tempo[k][p] = temp[i][j];
+                        }
+                        k++;p=0;
+                    }
+                }
+
+            }
+
+            jf5.add(logPane, BorderLayout.SOUTH);
+            jf5.pack();
         }
     }
 }
