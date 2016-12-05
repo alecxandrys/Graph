@@ -55,7 +55,7 @@ class PathChecker implements Callable<ArrayList> {
 
         cost_so_far.put(target, 0);
 
-        came_from.put(target, -1);
+        //came_from.put(target, -1); //никогда не учитывает точку начала, иначе её учитывает всегда, так что выкинем на всякий
 
         while (!frontline.isEmpty()) {
             current = frontline.get(0);

@@ -119,6 +119,8 @@ class Task5 {
     private class calculateSubGraph implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            JButton butt=(JButton)e.getSource();
+            butt.setVisible(false);
             JTextArea log = new JTextArea("Вывод лога поиска сильно связанных подграфов по методу Мальгранжа");
             JScrollPane logPane = new JScrollPane(log);
 
@@ -221,7 +223,7 @@ class Task5 {
                 currpoint=usedComp.indexOf(0);
             }
 
-            jf5.add(logPane, BorderLayout.SOUTH);
+            jf5.add(logPane, BorderLayout.CENTER);
             jf5.pack();
         }
     }

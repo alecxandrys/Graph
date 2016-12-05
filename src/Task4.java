@@ -24,7 +24,7 @@ class Task4 {
         jf4.setVisible(true);
         jf4.setResizable(true);
 
-        int n = (int) (Math.random() * 6 + 5);
+        int n = (int) (Math.random()*6  + 5);
 
         G1 = new int[n][n];
 
@@ -54,8 +54,8 @@ class Task4 {
 
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(4, true,false));
-        FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(4, false,false));
+        FutureTask<ArrayList> circuitIn = new FutureTask<>(new PathChecker(3, true,false));//count start from 0
+        FutureTask<ArrayList> circuitOut = new FutureTask<>(new PathChecker(3, false,false));
 
         long start = System.currentTimeMillis();
 
@@ -79,7 +79,7 @@ class Task4 {
             for (Integer element : circuitOutArray) {
                 circuitOutList.setText(circuitOutList.getText() + " " + (element + 1));
             }
-            if (G1.length != circuitInArray.size() || G1.length != circuitOutArray.size()) divide = false;
+            if (G1.length != circuitInArray.size() || G1.length != circuitOutArray.size()) divide = false;//не та связанность
 
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
