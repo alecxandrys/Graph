@@ -29,23 +29,23 @@ class Task5 {
         jf5.setVisible(true);
         jf5.setResizable(true);
 
-        n = (int) (Math.random() * 6 + 5);
+        n = (int) (Math.random() + 5);
 
         G1 = new int[n][n];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                G1[i][j] = (int) (Math.random() * 2);
+                G1[i][j] = /*(int) (Math.random() * 2);*/0;
             }
         }
 
-        n = (int) (Math.random() * 6 + 5);
+        n = (int) (Math.random() + 5);
 
         G2 = new int[n][n];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                G2[i][j] = (int) (Math.random() * 2);
+                G2[i][j] = /*(int) (Math.random() * 2);*/0;
             }
         }
 

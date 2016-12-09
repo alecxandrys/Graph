@@ -55,7 +55,7 @@ class PathChecker implements Callable<ArrayList> {
 
         cost_so_far.put(target, 0);
 
-        //came_from.put(target, -1); //никогда не учитывает точку начала, иначе её учитывает всегда, так что выкинем на всякий
+        came_from.put(target, -1);// всегда добавляется начальная точка
 
         while (!frontline.isEmpty()) {
             current = frontline.get(0);
@@ -71,8 +71,7 @@ class PathChecker implements Callable<ArrayList> {
                                 came_from.put(next, current);
                             }
                         });
-            }
-            else {
+            } else {
                 for (Integer next : neighbor) {
                     int newCost = cost_so_far.get(current) + Cost();
                     if (!cost_so_far.containsKey(next) || newCost < cost_so_far.get(next)) {
@@ -84,6 +83,7 @@ class PathChecker implements Callable<ArrayList> {
                 }
             }
         }
+
 
         for (int i = 0; i < Task4.G1.length; i++) {
             if (came_from.containsKey(i)) {
