@@ -25,7 +25,7 @@ class Task5{
     private int n;
 
     Task5(){
-        jf5=new JFrame("Чудинов Александр Алексеевич");
+        jf5=new JFrame("Чудинов Александр Алексеевич.#5");
 
         jf5.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf5.setVisible(true);
@@ -84,7 +84,9 @@ class Task5{
             new Task6();
         });
         jf5.add(changeButton,BorderLayout.SOUTH);
+
         jf5.pack();
+        jf5.setSize(new Dimension(400,tables.getHeight()+80));
     }
 
     private class calculateG3 implements ActionListener{
@@ -121,7 +123,9 @@ class Task5{
             tables.add(new Label("Граф G3"));
             tables.add(scrollPaneG3);
             tables.add(calcSubGraph);
+
             jf5.pack();
+            jf5.setSize(new Dimension(400,tables.getHeight()+80));
         }
     }
 
