@@ -1,49 +1,45 @@
+package Graph;
+
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import java.awt.*;
 
-class Task3 {
+class Task3{
 
     private int G1[][];
 
-    Task3()
-    {
-        JFrame jf3 = new JFrame("Симметрия графа. Чудинов Александр Алексеевич");
+    Task3(){
+        JFrame jf3=new JFrame("Симметрия графа. Чудинов Александр Алексеевич");
 
         jf3.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jf3.setVisible(true);
         jf3.setResizable(true);
 
-        int n = (int) (Math.random() * 6 + 5);
+        int n=(int) (Math.random()*6+5);
 
-        G1 = new int[n][n];
+        G1=new int[n][n];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                G1[i][j] = (int) (Math.random() * 2);
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<n; j++) {
+                G1[i][j]=(int) (Math.random()*2);
             }
         }
 
-        boolean symmetry = true;
-        for (int i = 0; i<n; i++)
-        {
-            for (int j=i;j<n;j++)
-            {
-                if(G1[i][j]!=G1[j][i])
-                {
-                    symmetry =false;break;
+        boolean symmetry=true;
+        for (int i=0; i<n; i++) {
+            for (int j=i; j<n; j++) {
+                if (G1[i][j]!=G1[j][i]) {
+                    symmetry=false;
+                    break;
                 }
             }
         }
 
-        ConjunctionTableModel tableModel=new ConjunctionTableModel(G1);
+       ConjunctionTableModel tableModel=new ConjunctionTableModel(G1);
 
 
+        JTable table=new JTable(tableModel);
 
-        JTable table = new JTable(tableModel);
-
-        JScrollPane scrollPane = new JScrollPane(table);
+        JScrollPane scrollPane=new JScrollPane(table);
 
         scrollPane.setPreferredSize(new Dimension(table.getWidth()+5,table.getRowHeight()*table.getRowCount()+25));
 
@@ -64,19 +60,17 @@ class Task3 {
         panel.add(changeButton);
         panel.add(label);
 
-        jf3.add(scrollPane, BorderLayout.NORTH);
+        jf3.add(scrollPane,BorderLayout.NORTH);
         jf3.add(panel,BorderLayout.CENTER);
         jf3.pack();
 
         tableModel.addTableModelListener(e -> {
-            boolean symmetry1 = true;
-            for (int i = 0; i<n; i++)
-            {
-                for (int j=i;j<n;j++)
-                {
-                    if(G1[i][j]!=G1[j][i])
-                    {
-                        symmetry1 =false;break;
+            boolean symmetry1=true;
+            for (int i=0; i<n; i++) {
+                for (int j=i; j<n; j++) {
+                    if (G1[i][j]!=G1[j][i]) {
+                        symmetry1=false;
+                        break;
                     }
                 }
             }
