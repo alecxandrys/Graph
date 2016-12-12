@@ -78,6 +78,12 @@ class Task5{
 
 
         jf5.add(tables,BorderLayout.NORTH);
+        JButton changeButton=new JButton("На задание 5");
+        changeButton.addActionListener(e -> {
+            jf5.setVisible(false);
+            new Task6();
+        });
+        jf5.add(changeButton,BorderLayout.SOUTH);
         jf5.pack();
     }
 
