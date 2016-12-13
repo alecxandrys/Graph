@@ -119,6 +119,7 @@ class Task4{
         @Override
         public void actionPerformed(ActionEvent e){
 
+            log.setEditable(false);
             JButton butt=(JButton) e.getSource();
             butt.setVisible(false);
 

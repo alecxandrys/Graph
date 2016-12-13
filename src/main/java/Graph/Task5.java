@@ -78,7 +78,7 @@ class Task5{
 
 
         jf5.add(tables,BorderLayout.NORTH);
-        JButton changeButton=new JButton("На задание 5");
+        JButton changeButton=new JButton("На задание 6");
         changeButton.addActionListener(e -> {
             jf5.setVisible(false);
             new Task6();
@@ -135,6 +135,7 @@ class Task5{
             JButton butt=(JButton) e.getSource();
             butt.setVisible(false);
             JTextArea log=new JTextArea("Вывод лога поиска сильно связанных подграфов по методу Мальгранжа");
+            log.setEditable(false);
             JScrollPane logPane=new JScrollPane(log);
 
             ArrayList<Integer> usedComp=new ArrayList<>();
